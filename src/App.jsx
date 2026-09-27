@@ -8,12 +8,12 @@ import About from "./pages/About";
 
 function App() {
   return (
-    <div
-      className="relative min-h-screen overflow-hidden bg-cover bg-center bg-fixed px-4 py-6"
-      style={{
-        backgroundImage: "url('/public/keyboard.png')",
-      }}
-    >
+   <div
+  className="relative min-h-screen bg-cover bg-center bg-no-repeat px-4 py-8 sm:py-12"
+  style={{
+    backgroundImage: "url('/background.png')",
+  }}
+>
 
       {/* Dark Overlay */}
       <div className="absolute inset-0 bg-[#05052a]/45"></div>
