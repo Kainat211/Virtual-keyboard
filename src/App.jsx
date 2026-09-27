@@ -11,7 +11,7 @@ function App() {
     <div
       className="relative min-h-screen overflow-hidden bg-cover bg-center bg-fixed px-4 py-6"
       style={{
-        backgroundImage: "url('/public/Keyboard.png')",
+        backgroundImage: "url('/public/keyboard.png')",
       }}
     >
 
