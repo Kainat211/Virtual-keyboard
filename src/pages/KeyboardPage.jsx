@@ -5,85 +5,94 @@ import Keyboard from "../components/Keyboard";
 function KeyboardPage() {
   const [text, setText] = useState("");
 
+  const [capsLock, setCapsLock] = useState(false);
+  const [shift, setShift] = useState(false);
+  const [ctrl, setCtrl] = useState(false);
+  const [alt, setAlt] = useState(false);
+
   const handleKeyClick = (key) => {
+    // Backspace
     if (key === "BACKSPACE") {
       setText((prev) => prev.slice(0, -1));
-    } else if (key === "ENTER") {
+    }
+
+    // Enter
+    else if (key === "ENTER") {
       setText((prev) => prev + "\n");
-    } else if (key === "CLEAR") {
+    }
+
+    // Clear
+    else if (key === "CLEAR") {
       setText("");
-    } else {
+    }
+
+    // Tab
+    else if (key === "TAB") {
+      setText((prev) => prev + "    ");
+    }
+
+    // Normal letters
+    else if (/^[a-z]$/i.test(key)) {
+      const uppercase = capsLock !== shift;
+      const letter = uppercase
+        ? key.toUpperCase()
+        : key.toLowerCase();
+
+      setText((prev) => prev + letter);
+
+      // Shift automatically turns off after one letter
+      if (shift) {
+        setShift(false);
+      }
+    }
+
+    // Numbers and Space
+    else {
       setText((prev) => prev + key);
+
+      if (shift) {
+        setShift(false);
+      }
     }
   };
 
   return (
-    <div className="mx-auto max-w-5xl pb-6">
+    <div className="mx-auto w-full max-w-5xl">
 
-      {/* Heading */}
-      <div className="mb-6 text-center">
-        <h1 className="text-3xl font-black text-white sm:text-4xl">
-          Virtual{" "}
-          <span className="bg-gradient-to-r from-pink-300 via-purple-300 to-blue-300 bg-clip-text text-transparent">
-            Keyboard
-          </span>
-        </h1>
+      {/* Keyboard Header */}
+      <div className="mb-4 flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-bold text-white">
+            ⌨️ KeyFlow Keyboard
+          </h1>
 
-        <p className="mt-2 text-sm text-purple-200">
-          Type • Create • Express
-        </p>
-      </div>
-
-      {/* Keyboard Card */}
-      <div className="relative overflow-hidden rounded-3xl border border-white/20 bg-[#080d2c]/90 p-4 shadow-2xl backdrop-blur-xl sm:p-5">
-
-        {/* Header */}
-        <div className="mb-4 flex items-center justify-between">
-
-          <div className="flex items-center gap-3">
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-purple-500 to-pink-500">
-              ⌨️
-            </div>
-
-            <div>
-              <h2 className="text-sm font-bold text-white sm:text-base">
-                KeyFlow Keyboard
-              </h2>
-
-              <p className="text-[11px] text-indigo-300">
-                Your virtual typing space
-              </p>
-            </div>
-          </div>
-
-          <span className="hidden rounded-full bg-green-400/10 px-3 py-1.5 text-[11px] text-green-300 sm:block">
-            ● Ready
-          </span>
-
+          <p className="text-sm text-indigo-200">
+            Your virtual typing space
+          </p>
         </div>
 
-        {/* Display */}
-        <Display text={text} />
-
-        {/* Keyboard Label */}
-        <div className="mb-2 mt-5 flex justify-between">
-          <span className="text-xs font-semibold text-indigo-200">
-            Virtual Keys
-          </span>
-
-          <span className="text-[11px] text-indigo-400">
-            Click to type
-          </span>
-        </div>
-
-        {/* Keyboard */}
-        <Keyboard handleKeyClick={handleKeyClick} />
-
+        <span className="rounded-full bg-emerald-500/20 px-4 py-2 text-sm text-emerald-300">
+          ● Ready
+        </span>
       </div>
 
-      <p className="mt-4 text-center text-xs text-purple-200">
-        Built with React.js & Tailwind CSS
-      </p>
+      {/* Display */}
+      <Display text={text} />
+
+      {/* Keyboard */}
+      <div className="mt-6">
+        <Keyboard
+          handleKeyClick={handleKeyClick}
+          capsLock={capsLock}
+          setCapsLock={setCapsLock}
+          shift={shift}
+          setShift={setShift}
+          ctrl={ctrl}
+          setCtrl={setCtrl}
+          alt={alt}
+          setAlt={setAlt}
+        />
+      </div>
 
     </div>
   );

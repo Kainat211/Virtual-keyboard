@@ -1,6 +1,16 @@
 import Key from "./Key";
 
-function Keyboard({ handleKeyClick }) {
+function Keyboard({
+  handleKeyClick,
+  capsLock,
+  setCapsLock,
+  shift,
+  setShift,
+  ctrl,
+  setCtrl,
+  alt,
+  setAlt,
+}) {
   const numbers = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"];
 
   const row2 = ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"];
@@ -9,10 +19,14 @@ function Keyboard({ handleKeyClick }) {
 
   const row4 = ["Z", "X", "C", "V", "B", "N", "M"];
 
+  // Active button style
+  const activeStyle =
+    "ring-2 ring-pink-300 brightness-125";
+
   return (
     <div className="mt-4 space-y-2">
 
-      {/* Row 1 */}
+      {/* Number Row */}
       <div className="grid grid-cols-10 gap-2">
         {numbers.map((number) => (
           <Key
@@ -21,20 +35,23 @@ function Keyboard({ handleKeyClick }) {
             onClick={() => handleKeyClick(number)}
           />
         ))}
+      </div>
 
+      {/* Backspace */}
+      <div className="flex justify-start">
         <Key
           value="Backspace"
           onClick={() => handleKeyClick("BACKSPACE")}
-          className="col-span-2"
+          className="w-40"
         />
       </div>
 
-      {/* Row 2 */}
+      {/* QWERTY Row */}
       <div className="grid grid-cols-11 gap-2">
-
         <Key
           value="Tab"
-          onClick={() => handleKeyClick("    ")}
+          onClick={() => handleKeyClick("TAB")}
+          className="text-green-200"
         />
 
         {row2.map((letter) => (
@@ -46,12 +63,12 @@ function Keyboard({ handleKeyClick }) {
         ))}
       </div>
 
-      {/* Row 3 */}
+      {/* ASDF Row */}
       <div className="grid grid-cols-11 gap-2">
-
         <Key
           value="Caps"
-          onClick={() => {}}
+          onClick={() => setCapsLock((prev) => !prev)}
+          className={capsLock ? activeStyle : ""}
         />
 
         {row3.map((letter) => (
@@ -68,12 +85,12 @@ function Keyboard({ handleKeyClick }) {
         />
       </div>
 
-      {/* Row 4 */}
+      {/* ZXCV Row */}
       <div className="grid grid-cols-11 gap-2">
-
         <Key
           value="Shift"
-          onClick={() => {}}
+          onClick={() => setShift((prev) => !prev)}
+          className={shift ? activeStyle : ""}
         />
 
         {row4.map((letter) => (
@@ -86,24 +103,23 @@ function Keyboard({ handleKeyClick }) {
 
         <Key
           value="Shift"
-          onClick={() => {}}
-          className="col-span-3"
+          onClick={() => setShift((prev) => !prev)}
+          className={`col-span-3 ${shift ? activeStyle : ""}`}
         />
       </div>
 
       {/* Bottom Row */}
       <div className="grid grid-cols-12 gap-2">
-
         <Key
           value="Ctrl"
-          onClick={() => {}}
-          className="col-span-1"
+          onClick={() => setCtrl((prev) => !prev)}
+          className={ctrl ? activeStyle : ""}
         />
 
         <Key
           value="Alt"
-          onClick={() => {}}
-          className="col-span-1"
+          onClick={() => setAlt((prev) => !prev)}
+          className={alt ? activeStyle : ""}
         />
 
         <Key
@@ -114,20 +130,19 @@ function Keyboard({ handleKeyClick }) {
 
         <Key
           value="Alt"
-          onClick={() => {}}
-          className="col-span-1"
+          onClick={() => setAlt((prev) => !prev)}
+          className={alt ? activeStyle : ""}
         />
 
         <Key
           value="Ctrl"
-          onClick={() => {}}
-          className="col-span-1"
+          onClick={() => setCtrl((prev) => !prev)}
+          className={ctrl ? activeStyle : ""}
         />
-
       </div>
 
       {/* Clear */}
-      <div className="mt-2 flex justify-end">
+      <div className="flex justify-end pt-2">
         <Key
           value="Clear"
           onClick={() => handleKeyClick("CLEAR")}
